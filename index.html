@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday — A Cinematic Tribute</title>
+  <meta name="description"
+    content="A cinematic, scroll-driven birthday tribute — an editorial-luxury celebration in scroll.">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════
+       CSS VARIABLES
+       ═══════════════════════════════════ */
+    :root {
+      --pink: #f2a7bb;
+      --pink-soft: #fde8ef;
+      --white: #fdfcfa;
+      --lavender: #c8b8e8;
+      --lavender-soft: #ede6f7;
+      --sage: #9eb89a;
+      --sage-soft: #d4e8d0;
+      --dark: #1a1520;
+    }
+
+    /* ═══════════════════════════════════
+       GLOBAL RESET & BASE
+       ═══════════════════════════════════ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      background: var(--dark);
+      color: var(--white);
+      overflow-x: hidden;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+    }
+
+    ::selection {
+      background: var(--pink);
+      color: var(--dark);
+    }
+
+    img,
+    video {
+      min-height: 300px;
+    }
+
+    /* ═══════════════════════════════════
+       LOGIN PAGE
+       ═══════════════════════════════════ */
+    #loginPage {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .login-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+    }
+
+    .login-bg-left,
+    .login-bg-right {
+      width: 50%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-bg-left img,
+    .login-bg-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: unset;
+    }
+
+    .login-bg-overlay-left {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right,
+          rgba(242, 167, 187, 0.55) 0%,
+          rgba(253, 220, 230, 0.35) 100%);
+    }
+
+    .login-bg-overlay-right {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to left,
+          rgba(242, 120, 160, 0.55) 0%,
+          rgba(253, 220, 230, 0.35) 100%);
+    }
+
+    .login-bg::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom,
+          transparent,
+          rgba(253, 220, 230, 0.8) 30%,
+          rgba(253, 220, 230, 0.8) 70%,
+          transparent);
+    }
+
+    .login-card {
+      position: relative;
+      z-index: 2;
+      background: rgba(253, 240, 245, 0.15);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(253, 220, 230, 0.35);
+      border-radius: 24px;
+      padding: 56px 52px 52px;
+      width: 480px;
+      max-width: 90vw;
+      box-shadow:
+        0 30px 80px rgba(200, 60, 100, 0.2),
+        0 0 0 1px rgba(253, 220, 230, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      text-align: center;
+    }
+
+    .login-ornament {
+      font-size: 22px;
+      color: #f2a7bb;
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
+    .login-title {
+      font-family: 'DM Sans', sans-serif;
+      font-style: normal;
+      font-size: 36px;
+      color: #fff0f5;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .login-subtitle {
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255, 220, 235, 0.6);
+      margin-bottom: 44px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      text-align: left;
+    }
+
+    .login-field {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .login-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255, 220, 235, 0.7);
+      font-weight: 300;
+    }
+
+    .login-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(253, 220, 230, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: #fff0f5;
+      outline: none;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .login-input::placeholder {
+      color: rgba(255, 220, 235, 0.35);
+    }
+
+    .login-input:focus {
+      border-color: rgba(242, 167, 187, 0.7);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .login-select-wrapper {
+      position: relative;
+    }
+
+    .login-select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(253, 220, 230, 0.3);
+      border-radius: 12px;
+      padding: 16px 48px 16px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: #fff0f5;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+
+    .login-select:focus {
+      border-color: rgba(242, 167, 187, 0.7);
+    }
+
+    .login-select option {
+      background: var(--dark);
+      color: #fff0f5;
+    }
+
+    .login-select-arrow {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(242, 167, 187, 0.7);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .login-error {
+      font-size: 13px;
+      color: rgba(255, 180, 200, 0.85);
+      text-align: center;
+      letter-spacing: 1px;
+      display: none;
+      margin-top: -8px;
+    }
+
+    .login-error.show {
+      display: block;
+    }
+
+    .login-btn {
+      margin-top: 8px;
+      background: linear-gradient(135deg, #f2a7bb 0%, #e87ca0 100%);
+      border: none;
+      border-radius: 50px;
+      padding: 18px 36px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      letter-spacing: 2px;
+      color: #3a1020;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      box-shadow: 0 12px 40px rgba(232, 124, 160, 0.4);
+      text-transform: uppercase;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 50px rgba(232, 124, 160, 0.5);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    #loginPage.fade-out {
+      animation: loginFadeOut 0.8s ease forwards;
+    }
+
+    @keyframes loginFadeOut {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.04);
+        pointer-events: none;
+      }
+    }
+
+    @keyframes loginShake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-8px);
+      }
+
+      40% {
+        transform: translateX(8px);
+      }
+
+      60% {
+        transform: translateX(-6px);
+      }
+
+      80% {
+        transform: translateX(6px);
+      }
+    }
+
+    /* ═══════════════════════════════════
+       SECTION 1 — HERO
+       ═══════════════════════════════════ */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 21, 32, 0.35);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 96px;
+      color: var(--white);
+      letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      letter-spacing: 6px;
+      color: var(--pink);
+      text-transform: uppercase;
+      margin-top: 16px;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: var(--pink);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      60% {
+        opacity: 0.3;
+        transform: translateY(16px);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+    }
+
+    /* ═══════════════════════════════════
+       SECTION 2 — TRANSITION BRIDGE
+       ═══════════════════════════════════ */
+    .bridge {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .bridge-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .bridge-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 21, 32, 0.45);
+      z-index: 2;
+    }
+
+    .bridge-text {
+      position: relative;
+      z-index: 3;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 52px;
+      color: var(--white);
+      opacity: 0;
+    }
+
+    .bridge-line {
+      position: relative;
+      z-index: 3;
+      width: 200px;
+      height: 1px;
+      background: var(--pink);
+      margin-top: 32px;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: center;
+    }
+
+    /* ═══════════════════════════════════
+       SECTION 3 — MOODS JOURNEY
+       ═══════════════════════════════════ */
+    .moods-wrapper {
+      overflow: hidden;
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    .moods-wrapper * {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+
+    .moods-track {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      height: 100vh;
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    .mood-panel {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .mood-panel video {
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    /* Chapter 1 — Dreamer Shoto */
+    .mood-dreamer {
+      background:
+        radial-gradient(circle at 85% 15%, rgba(200, 184, 232, 0.08) 0%, transparent 60%),
+        #1a1525;
+    }
+
+    .mood-dreamer .mood-text-side {
+      width: 42%;
+      padding: 80px;
+    }
+
+    .mood-dreamer .mood-img-side {
+      width: 58%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-right: 40px;
+    }
+
+    .mood-dreamer .mood-img-side video {
+      width: 100%;
+      max-height: 85vh;
+      object-fit: cover;
+      border-radius: 16px;
+      transform: rotate(-3deg);
+      box-shadow: 0 30px 80px rgba(200, 184, 232, 0.15);
+    }
+
+    /* Chapter 2 — Ragebaited Shoto */
+    .mood-ragebaited {
+      background:
+        radial-gradient(circle at 15% 85%, rgba(242, 167, 187, 0.09) 0%, transparent 60%),
+        #1f1520;
+    }
+
+    .mood-ragebaited .mood-bg-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .mood-ragebaited .mood-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(26, 21, 32, 0.65) 30%, transparent);
+      z-index: 2;
+    }
+
+    .mood-ragebaited .mood-text-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 80px;
+      z-index: 3;
+    }
+
+    /* Chapter 3 — Yapper Shoto (landscape video) */
+    .mood-yapper {
+      background:
+        radial-gradient(circle at 50% 50%, rgba(200, 184, 232, 0.08) 0%, transparent 60%),
+        #1a1525;
+      justify-content: center;
+      gap: 60px;
+      padding: 0 80px;
+    }
+
+    .mood-yapper .mood-video-side {
+      flex: 1.4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mood-yapper .mood-video-side video {
+      width: 100%;
+      max-height: 65vh;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 30px 100px rgba(200, 184, 232, 0.2);
+      min-height: auto;
+    }
+
+    .mood-yapper .mood-text-right {
+      flex: 0.6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 40px;
+    }
+
+    /* Chapter 4 — Grateful Shoto (portrait video) */
+    .mood-grateful {
+      background:
+        radial-gradient(circle at 50% 50%, rgba(158, 184, 154, 0.08) 0%, transparent 60%),
+        #181e18;
+      justify-content: flex-start;
+      gap: 0;
+      padding: 0;
+    }
+
+    .mood-grateful .mood-text-left {
+      width: 35%;
+      min-width: 280px;
+      padding: 60px 40px 60px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .mood-grateful .mood-portrait-side {
+      flex: 1;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 20px 40px 20px 0;
+    }
+
+    .mood-grateful .mood-portrait-side video {
+      height: 92vh;
+      width: auto;
+      max-width: 100%;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 30px 100px rgba(158, 184, 154, 0.25);
+      min-height: auto;
+    }
+
+    /* Chapter 5 — Icon Shoto */
+    .mood-icon {
+      background: var(--dark);
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .mood-icon .mood-bg-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .mood-icon .mood-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26, 21, 32, 0.92) 0%, rgba(26, 21, 32, 0.1) 60%);
+      z-index: 2;
+    }
+
+    .mood-icon .mood-text-center {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding-bottom: 15vh;
+      width: 100%;
+    }
+
+    /* Shared mood typography */
+    .mood-chapter-num {
+      font-size: 13px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .mood-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 72px;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .mood-title-lg {
+      font-size: 80px;
+      font-style: normal;
+    }
+
+    /* Icon shimmer */
+    .shimmer-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 96px;
+      background: linear-gradient(90deg,
+          var(--white) 0%,
+          var(--lavender) 40%,
+          var(--pink) 60%,
+          var(--white) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    /* ═══════════════════════════════════
+       SECTION 4 — PRECIOUS MOMENTS
+       ═══════════════════════════════════ */
+    .moments-section {
+      background: var(--dark);
+    }
+
+    .moments-header {
+      text-align: center;
+      padding: 0;
+    }
+
+    .moments-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 64px;
+      color: var(--white);
+      position: relative;
+      display: inline-block;
+    }
+
+    .moments-header h2::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: var(--pink);
+      margin: 20px auto 0;
+    }
+
+    .story-video-wrapper {
+      min-height: 100vh;
+      padding: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      overflow: hidden;
+      background: #1a1520;
+    }
+
+    .story-video-wrapper video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+      box-shadow: none;
+      cursor: pointer;
+      z-index: 1;
+      min-height: auto;
+    }
+
+    .story-video-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,
+          rgba(26, 21, 32, 0.85) 0%,
+          rgba(26, 21, 32, 0.2) 40%,
+          transparent 70%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .story-video-text {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 40px 80px;
+      margin-top: 0;
+    }
+
+    .story-video-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 40px;
+      color: var(--white);
+    }
+
+    .story-video-text p {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      letter-spacing: 3px;
+      color: rgba(253, 252, 250, 0.5);
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+
+    /* ═══════════════════════════════════
+       SECTION 5 — CLOSING LETTER
+       ═══════════════════════════════════ */
+    .letter-section {
+      min-height: 100vh;
+      background-color: var(--dark);
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(242, 167, 187, 0.04) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(200, 184, 232, 0.04) 0%, transparent 60%),
+        radial-gradient(circle at 60% 80%, rgba(158, 184, 154, 0.03) 0%, transparent 50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .letter-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 120px 40px;
+      text-align: center;
+    }
+
+    .letter-ornament {
+      font-size: 18px;
+      letter-spacing: 16px;
+      color: var(--pink);
+      margin-bottom: 60px;
+      opacity: 0.7;
+    }
+
+    .letter-greeting {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 52px;
+      color: var(--white);
+    }
+
+    .letter-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 80px;
+      color: var(--pink);
+      display: block;
+      margin-top: -8px;
+    }
+
+    .letter-body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 2.1;
+      color: rgba(253, 252, 250, 0.75);
+      margin-top: 48px;
+      text-align: center;
+    }
+
+    .letter-body p+p {
+      margin-top: 28px;
+    }
+
+    .letter-body .word {
+      display: inline-block;
+      margin-right: 0.3em;
+    }
+
+    .letter-sign-off {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 20px;
+      color: rgba(253, 252, 250, 0.5);
+      margin-top: 48px;
+    }
+
+    .letter-sign-name {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 32px;
+      color: var(--lavender);
+      margin-top: 8px;
+    }
+
+    .letter-closing-img {
+      width: 100%;
+      border-radius: 16px;
+      margin-top: 72px;
+      clip-path: inset(100% 0 0 0);
+    }
+
+    /* ═══════════════════════════════════
+       LETTER → FINAL TRANSITION
+       ═══════════════════════════════════ */
+    .letter-to-final-transition {
+      height: 40vh;
+      background: linear-gradient(to bottom,
+          var(--dark) 0%,
+          rgba(242, 167, 187, 0.06) 40%,
+          rgba(200, 184, 232, 0.06) 70%,
+          var(--dark) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .transition-ornament-line {
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom,
+          transparent 0%,
+          var(--pink) 30%,
+          var(--lavender) 70%,
+          transparent 100%);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.4;
+    }
+
+    /* ═══════════════════════════════════
+       SECTION 6 — FINAL FRAME
+       ═══════════════════════════════════ */
+    .final-section {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .final-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .final-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 21, 32, 0.45);
+      z-index: 2;
+    }
+
+    .final-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+    }
+
+    .final-hb {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 80px;
+      color: var(--white);
+      opacity: 0;
+    }
+
+    .final-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 120px;
+      color: var(--pink);
+      display: block;
+      margin-top: -12px;
+      opacity: 0;
+    }
+
+    .final-date {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 6px;
+      color: rgba(253, 252, 250, 0.4);
+      text-transform: uppercase;
+      margin-top: 24px;
+      opacity: 0;
+    }
+
+    /* Floating particles */
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      z-index: 4;
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 0.5;
+      }
+
+      85% {
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════ */
+    @media (max-width: 768px) {
+      .hero-name {
+        font-size: 48px;
+      }
+
+      .hero-subtitle {
+        font-size: 12px;
+        letter-spacing: 4px;
+      }
+
+      .bridge-text {
+        font-size: 32px;
+      }
+
+      .mood-panel {
+        flex-direction: column !important;
+        justify-content: center;
+      }
+
+      .mood-dreamer .mood-text-side,
+      .mood-dreamer .mood-img-side {
+        width: 100%;
+        padding: 40px;
+      }
+
+      .mood-dreamer .mood-img-side video {
+        transform: rotate(-2deg);
+      }
+
+      .mood-title {
+        font-size: 44px;
+      }
+
+      .mood-title-lg {
+        font-size: 52px;
+      }
+
+      .shimmer-text {
+        font-size: 56px;
+      }
+
+      .mood-yapper .mood-video-side,
+      .mood-yapper .mood-text-right {
+        flex: unset;
+        width: 100%;
+        padding: 30px;
+      }
+
+      .mood-grateful .mood-text-left {
+        width: 100%;
+        min-width: unset;
+        padding: 30px;
+        text-align: center;
+        align-items: center;
+      }
+
+      .mood-grateful .mood-portrait-side {
+        height: auto;
+        padding: 20px;
+      }
+
+      .mood-grateful .mood-portrait-side video {
+        height: 50vh;
+      }
+
+      .moments-header h2 {
+        font-size: 40px;
+      }
+
+      .letter-greeting {
+        font-size: 36px;
+      }
+
+      .letter-name {
+        font-size: 52px;
+      }
+
+      .letter-inner {
+        padding: 80px 24px;
+      }
+
+      .final-hb {
+        font-size: 48px;
+      }
+
+      .final-name {
+        font-size: 72px;
+      }
+
+      .login-title {
+        font-size: 28px;
+      }
+
+      .login-card {
+        padding: 40px 28px 36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════
+       LOGIN PAGE
+       ═══════════════════════════════════ -->
+  <div id="loginPage">
+    <div class="login-bg">
+      <div class="login-bg-left">
+        <img src="Login1.jpg" alt="">
+        <div class="login-bg-overlay-left"></div>
+      </div>
+      <div class="login-bg-right">
+        <img src="Login2.jpg" alt="">
+        <div class="login-bg-overlay-right"></div>
+      </div>
+    </div>
+
+    <div class="login-card">
+      <div class="login-ornament">✦</div>
+      <h1 class="login-title">कौन हो तुम ?</h1>
+      <p class="login-subtitle">prove it.</p>
+
+      <div class="login-form">
+        <div class="login-field">
+          <label class="login-label">What is her name?</label>
+          <input type="text" id="loginName" class="login-input" placeholder="Name type karo..." autocomplete="off">
+        </div>
+
+        <div class="login-field">
+          <label class="login-label">Which day was she born?</label>
+          <div class="login-select-wrapper">
+            <select id="loginDay" class="login-select">
+              <option value="" disabled selected>Birth day select karo...</option>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+            </select>
+            <div class="login-select-arrow">↓</div>
+          </div>
+        </div>
+
+        <p class="login-error" id="loginError">गलत जवाब ✦</p>
+
+        <button class="login-btn" id="loginBtn" onclick="checkLogin()">
+          enter her world →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       MAIN SITE (hidden until login)
+       ═══════════════════════════════════ -->
+  <div id="mainSite" style="display:none">
+
+    <!-- ═══════════════════════════════════
+         SECTION 1 — HERO
+         ═══════════════════════════════════ -->
+    <section class="hero" id="hero">
+      <video class="hero-video" src="LandingVideo.mp4" autoplay muted loop playsinline></video>
+      <div class="hero-overlay" id="heroOverlay"></div>
+
+      <div class="hero-content" id="heroContent">
+        <h1 class="hero-name">Shotoroopa</h1>
+        <p class="hero-subtitle">a birthday in scroll</p>
+      </div>
+
+      <div class="scroll-indicator">
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════
+         SECTION 2 — TRANSITION BRIDGE
+         ═══════════════════════════════════ -->
+    <section class="bridge" id="bridge">
+      <img class="bridge-bg" src="Multitudes.jpg" alt="She contains multitudes">
+      <div class="bridge-overlay"></div>
+      <h2 class="bridge-text" id="bridgeText">She contains multitudes.</h2>
+      <div class="bridge-line" id="bridgeLine"></div>
+    </section>
+
+    <!-- ═══════════════════════════════════
+         SECTION 3 — MOODS JOURNEY
+         ═══════════════════════════════════ -->
+    <section class="moods-wrapper" id="moodsWrapper">
+      <div class="moods-track" id="moodsTrack">
+
+        <!-- Chapter 1 — Dreamer Shoto -->
+        <div class="mood-panel mood-dreamer" id="moodDreamer">
+          <div class="mood-text-side">
+            <p class="mood-chapter-num" style="color: var(--lavender);">01</p>
+            <h3 class="mood-title">Dreamer Shoto</h3>
+          </div>
+          <div class="mood-img-side">
+            <video src="TheDreamer.mp4" autoplay muted loop playsinline loading="lazy" id="dreamerVideo"></video>
+          </div>
+        </div>
+
+        <!-- Chapter 2 — Ragebaited Shoto -->
+        <div class="mood-panel mood-ragebaited" id="moodRagebaited">
+          <video class="mood-bg-video" src="Ragebaited.mp4" autoplay muted loop playsinline loading="lazy"></video>
+          <div class="mood-bg-overlay"></div>
+          <div class="mood-text-bottom">
+            <p class="mood-chapter-num" style="color: var(--pink);" id="ragebaitedNum">02</p>
+            <h3 class="mood-title mood-title-lg" id="ragebaitedTitle">Ragebaited Shoto</h3>
+          </div>
+        </div>
+
+        <!-- Chapter 3 — Yapper Shoto (Landscape) -->
+        <div class="mood-panel mood-yapper" id="moodYapper">
+          <div class="mood-video-side">
+            <video src="Yapper.mp4" autoplay muted loop playsinline loading="lazy" id="yapperVideo"></video>
+          </div>
+          <div class="mood-text-right">
+            <p class="mood-chapter-num" style="color: var(--lavender);">03</p>
+            <h3 class="mood-title" style="font-size:64px">Yapper Shoto</h3>
+          </div>
+        </div>
+
+        <!-- Chapter 4 — Grateful Shoto (Portrait) -->
+        <div class="mood-panel mood-grateful" id="moodGrateful">
+          <div class="mood-text-left">
+            <p class="mood-chapter-num" style="color: var(--sage);">04</p>
+            <h3 class="mood-title">Grateful Shoto</h3>
+          </div>
+          <div class="mood-portrait-side">
+            <video src="Grateful.mp4" autoplay muted loop playsinline loading="lazy" id="gratefulVideo"></video>
+          </div>
+        </div>
+
+        <!-- Chapter 5 — Icon Shoto -->
+        <div class="mood-panel mood-icon" id="moodIcon">
+          <video class="mood-bg-video" src="TheIcon.mp4" autoplay muted loop playsinline loading="lazy"></video>
+          <div class="mood-bg-overlay"></div>
+          <div class="mood-text-center" id="iconTextCenter">
+            <p class="mood-chapter-num" style="color: var(--lavender);">05</p>
+            <h3 class="shimmer-text">Icon Shoto</h3>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════
+         SECTION 4 — PRECIOUS MOMENTS
+         ═══════════════════════════════════ -->
+    <section class="moments-section" id="moments">
+      <div class="story-video-wrapper" id="storyVideoWrapper">
+        <div class="moments-header"
+          style="position:absolute;top:60px;left:50%;transform:translateX(-50%);z-index:3;white-space:nowrap;padding:0;margin:0;">
+          <h2>precious moments</h2>
+        </div>
+        <video src="StoryVideo.mp4" loop muted playsinline id="storyVideo"></video>
+        <div class="story-video-text" id="storyVideoText">
+          <h3>Every laugh, Every moment, Every version of her</h3>
+          <p></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════
+         SECTION 5 — CLOSING LETTER
+         ═══════════════════════════════════ -->
+    <section class="letter-section" id="letterSection">
+      <div class="letter-inner">
+        <div class="letter-ornament">✦ ✦ ✦</div>
+
+        <h2 class="letter-greeting">Happy Birthday,</h2>
+        <span class="letter-name">Shotoroopa</span>
+
+        <div class="letter-body" id="letterBody">
+          <p>Tere Lecture works for me, very important unko continue rakhna.</p>
+          <p>Thank you for being there for me. And having my back always. </p>
+        </div>
+
+        <p class="letter-sign-off">With so much admiration for Devi,</p>
+        <p class="letter-sign-name">Raj</p>
+
+        <img src="ClosingImage.jpg" alt="Closing photo" class="letter-closing-img" id="closingImg">
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════
+         TRANSITION: LETTER → FINAL
+         ═══════════════════════════════════ -->
+    <div class="letter-to-final-transition" id="letterFinalTransition">
+      <div class="transition-ornament-line"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SECTION 6 — FINAL FRAME
+         ═══════════════════════════════════ -->
+    <section class="final-section" id="finalSection">
+      <img class="final-bg" src="LandingPhoto.jpg" alt="Final backdrop">
+      <div class="final-overlay"></div>
+
+      <div class="final-content">
+        <h2 class="final-hb" id="finalHB">Happy Birthday</h2>
+        <span class="final-name" id="finalName">Shotoroopa</span>
+        <p class="final-date" id="finalDate">March 14, 2026</p>
+      </div>
+
+      <!-- Particles will be injected here by JS -->
+    </section>
+
+  </div>
+  <!-- end #mainSite -->
+
+
+  <!-- ═══════════════════════════════════
+       LOGIN JAVASCRIPT
+       ═══════════════════════════════════ -->
+  <script>
+    function checkLogin() {
+      const nameInput = document.getElementById('loginName').value.trim().toLowerCase();
+      const dayInput = document.getElementById('loginDay').value;
+      const errorEl = document.getElementById('loginError');
+
+      const correctName = 'shotoroopa';
+      const correctDay = 'Monday';
+
+      if (nameInput === correctName && dayInput === correctDay) {
+        const loginPage = document.getElementById('loginPage');
+        loginPage.classList.add('fade-out');
+        setTimeout(() => {
+          loginPage.style.display = 'none';
+          document.getElementById('mainSite').style.display = 'block';
+          ScrollTrigger.refresh();
+        }, 800);
+      } else {
+        errorEl.classList.add('show');
+        const card = document.querySelector('.login-card');
+        card.style.animation = 'none';
+        card.offsetHeight;
+        card.style.animation = 'loginShake 0.4s ease';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('loginName').addEventListener('keydown', e => {
+        if (e.key === 'Enter') checkLogin();
+      });
+    });
+  </script>
+
+  <!-- ═══════════════════════════════════
+       MAIN JAVASCRIPT
+       ═══════════════════════════════════ -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.config({ nullTargetWarn: false });
+
+    /* ─── GLOBAL: Smart audio management ─── */
+    let currentUnmutedVideo = null;
+
+    document.querySelectorAll('video').forEach(video => {
+      video.style.cursor = 'pointer';
+      video.addEventListener('click', () => {
+        if (currentUnmutedVideo && currentUnmutedVideo !== video) {
+          currentUnmutedVideo.muted = true;
+        }
+        video.muted = !video.muted;
+        if (!video.muted) {
+          currentUnmutedVideo = video;
+        } else {
+          currentUnmutedVideo = null;
+        }
+      });
+    });
+
+    // Auto-unmute when in view, auto-mute when out of view
+    const allVideos = document.querySelectorAll('video');
+    const autoMuteObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (currentUnmutedVideo && currentUnmutedVideo !== entry.target) {
+            currentUnmutedVideo.muted = true;
+          }
+          entry.target.muted = false;
+          entry.target.play().catch(() => { });
+          currentUnmutedVideo = entry.target;
+        } else {
+          entry.target.muted = true;
+          if (currentUnmutedVideo === entry.target) {
+            currentUnmutedVideo = null;
+          }
+        }
+      });
+    }, { threshold: 0.5 });
+
+    allVideos.forEach(v => autoMuteObserver.observe(v));
+
+    /* ─── SECTION 1: HERO ─── */
+    (function heroAnimations() {
+      const heroTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: '+=600',
+          pin: true,
+          scrub: 1
+        }
+      });
+
+      heroTl
+        .to('.hero-video', { scale: 0.6, ease: 'none' }, 0)
+        .to('#heroOverlay', { opacity: 0.85, ease: 'none' }, 0)
+        .to('#heroContent', { opacity: 0, y: -60, ease: 'none' }, 0)
+        .to('.scroll-indicator', { opacity: 0, ease: 'none' }, 0);
+    })();
+
+    /* ─── SECTION 2: BRIDGE ─── */
+    (function bridgeAnimations() {
+      const bridgeTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#bridge',
+          start: 'top 65%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      bridgeTl
+        .to('#bridgeText', {
+          opacity: 1, y: 0, duration: 1.2, ease: 'power3.out'
+        })
+        .to('#bridgeLine', {
+          opacity: 1, scaleX: 1, duration: 0.8, ease: 'power2.out'
+        }, '+=0.4');
+
+      gsap.set('#bridgeText', { opacity: 0, y: 30 });
+      gsap.set('#bridgeLine', { opacity: 0, scaleX: 0 });
+    })();
+
+    /* ─── SECTION 3: MOODS HORIZONTAL SCROLL ─── */
+    (function moodsAnimations() {
+      const track = document.getElementById('moodsTrack');
+
+      gsap.to(track, {
+        x: () => -(track.scrollWidth - window.innerWidth),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#moodsWrapper',
+          pin: true,
+          scrub: 0.5,
+          end: () => '+=' + (track.scrollWidth - window.innerWidth),
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+          fastScrollEnd: true
+        }
+      });
+
+      const moodsST = ScrollTrigger.getAll().find(st => st.vars.trigger === '#moodsWrapper');
+      let dreamerDone = false, ragebaitedDone = false, yapperDone = false, gratefulDone = false, iconDone = false;
+
+      if (moodsST) {
+        moodsST.vars.onUpdate = function (self) {
+          const progress = self.progress;
+
+          // Chapter 1 — Dreamer at ~2%
+          if (progress > 0.02 && !dreamerDone) {
+            dreamerDone = true;
+            gsap.from('#dreamerVideo', { x: 100, opacity: 0, duration: 1, ease: 'power2.out' });
+            gsap.from('#moodDreamer .mood-text-side > *', {
+              x: -60, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out'
+            });
+          }
+
+          // Chapter 2 — Ragebaited at ~22%
+          if (progress > 0.20 && !ragebaitedDone) {
+            ragebaitedDone = true;
+            gsap.from('#ragebaitedNum', { y: -100, opacity: 0, duration: 0.8, ease: 'power3.out' });
+            gsap.from('#ragebaitedTitle', {
+              x: -120, opacity: 0, duration: 1.2, ease: 'elastic.out(1, 0.5)', delay: 0.2
+            });
+          }
+
+          // Chapter 3 — Yapper at ~42%
+          if (progress > 0.40 && !yapperDone) {
+            yapperDone = true;
+            gsap.from('#yapperVideo', { x: -80, opacity: 0, duration: 1.2, ease: 'power3.out' });
+            gsap.from('#moodYapper .mood-text-right > *', {
+              x: 80, opacity: 0, stagger: 0.15, duration: 0.8, ease: 'power2.out', delay: 0.3
+            });
+          }
+
+          // Chapter 4 — Grateful at ~62%
+          if (progress > 0.60 && !gratefulDone) {
+            gratefulDone = true;
+            gsap.from('#gratefulVideo', { x: 80, opacity: 0, duration: 1.2, ease: 'power3.out' });
+            gsap.from('#moodGrateful .mood-text-left > *', {
+              x: -80, opacity: 0, stagger: 0.15, duration: 0.8, ease: 'power2.out', delay: 0.3
+            });
+          }
+
+          // Chapter 5 — Icon at ~82%
+          if (progress > 0.80 && !iconDone) {
+            iconDone = true;
+            gsap.from('#iconTextCenter > *', {
+              y: 80, opacity: 0, stagger: 0.2, duration: 1, ease: 'power3.out'
+            });
+          }
+        };
+      }
+    })();
+
+    /* ─── SECTION 4: PRECIOUS MOMENTS (StoryVideo) ─── */
+    (function momentsAnimations() {
+      const storyVideo = document.getElementById('storyVideo');
+      const storyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.play().catch(() => { });
+          } else {
+            entry.target.pause();
+          }
+        });
+      }, { threshold: 0.5 });
+
+      storyObserver.observe(storyVideo);
+
+      gsap.from('#storyVideo', {
+        y: 60,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#storyVideoWrapper',
+          start: 'top 70%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      gsap.from('#storyVideoText', {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        delay: 0.3,
+        scrollTrigger: {
+          trigger: '#storyVideoWrapper',
+          start: 'top 70%',
+          toggleActions: 'play none none none'
+        }
+      });
+    })();
+
+    /* ─── SECTION 5: CLOSING LETTER ─── */
+    (function letterAnimations() {
+      const letterBody = document.getElementById('letterBody');
+      const paragraphs = letterBody.querySelectorAll('p');
+
+      paragraphs.forEach(p => {
+        const words = p.textContent.split(/\s+/);
+        p.innerHTML = words.map(w =>
+          '<span class="word">' + w + '</span>'
+        ).join(' ');
+      });
+
+      gsap.fromTo('.word',
+        { opacity: 0, y: 12 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.04,
+          duration: 0.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '#letterBody',
+            start: 'top 70%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+
+      gsap.to('#closingImg', {
+        clipPath: 'inset(0% 0 0 0)',
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#closingImg',
+          start: 'top 85%',
+          end: '+=300',
+          scrub: 0.8
+        }
+      });
+    })();
+
+    /* ─── TRANSITION: LETTER → FINAL ─── */
+    (function transitionAnimations() {
+      gsap.fromTo('#letterFinalTransition .transition-ornament-line',
+        { scaleY: 0, transformOrigin: 'top center' },
+        {
+          scaleY: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#letterFinalTransition',
+            start: 'top 80%',
+            end: 'bottom 20%',
+            scrub: 0.6
+          }
+        }
+      );
+    })();
+
+    /* ─── SECTION 6: FINAL FRAME ─── */
+    (function finalAnimations() {
+      const finalTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#finalSection',
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      finalTl
+        .to('#finalHB', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
+        .to('#finalName', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.75')
+        .to('#finalDate', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.75');
+
+      gsap.set(['#finalHB', '#finalName', '#finalDate'], { y: 30 });
+
+      const finalSection = document.getElementById('finalSection');
+      const colors = ['var(--pink)', 'var(--lavender)', 'var(--sage)'];
+
+      for (let i = 0; i < 25; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+
+        const size = 2 + Math.random() * 2;
+        const left = 5 + Math.random() * 90;
+        const duration = 8 + Math.random() * 8;
+        const delay = Math.random() * 8;
+        const color = colors[i % 3];
+
+        particle.style.cssText = `
+          width: ${size}px;
+          height: ${size}px;
+          background: ${color};
+          left: ${left}%;
+          bottom: -10px;
+          animation-duration: ${duration}s;
+          animation-delay: ${delay}s;
+        `;
+
+        finalSection.appendChild(particle);
+      }
+    })();
+
+    /* ─── REFRESH ON LOAD ─── */
+    window.addEventListener('load', () => {
+      ScrollTrigger.refresh();
+    });
+  </script>
+</body>
+
+</html>
